@@ -1,0 +1,33 @@
+{
+  "name": "glox",
+  "version": "0.0.1",
+  "description": "File globbing enhanced with xregexp",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/tap ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jasonkuhrt/glox.git"
+  },
+  "keywords": [
+    "regexp",
+    "glob",
+    "minimatch",
+    "file",
+    "read"
+  ],
+  "author": "Jason Kuhrt <jasonkuhrt@me.com> (http://jasonkuhrt.com/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/jasonkuhrt/glox/issues"
+  },
+  "dependencies": {
+    "xregexp": "~2.0.0",
+    "glob": "~3.2.6",
+    "lodash": "~2.2.1"
+  },
+  "devDependencies": {
+    "tap": "~0.4.4"
+  }
+}
