@@ -1,6 +1,6 @@
 {
   "name": "glox",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "File globbing enhanced with xregexp",
   "main": "index.js",
   "scripts": {
@@ -25,9 +25,12 @@
   "dependencies": {
     "xregexp": "~2.0.0",
     "glob": "~3.2.6",
-    "lodash": "~2.2.1"
+    "lodash": "~2.2.1",
+    "coffee-script": "~1.6.3",
+    "assert-plus": "~0.1.4"
   },
   "devDependencies": {
-    "tap": "~0.4.4"
+    "tap": "~0.4.4",
+    "coffee-errors": "~0.8.4"
   }
 }
