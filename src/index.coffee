@@ -76,12 +76,14 @@ convention.inject = (gpat, xpat, host_or_factory, manual_trigger)->
 
     assert.func f, 'inject function'
 
-    do_f = ->
-      args = if _.isFunction(host_or_factory) then [f] else [f, host_or_factory]
-      require(match.input)(args...)
-    do_f.f = f
+    do_inject = (manual_args...)->
+      f_args = if _.isFunction(host_or_factory) then [f] else [f, host_or_factory]
+      require(match.input)(f_args.concat(manual_args)...)
 
-    if manual_trigger then manual_trigger(do_f, match) else do_f()
+    # Expose f on injector, offers more flexibility for manual_trigger cases
+    do_inject.f = f
+
+    if manual_trigger then manual_trigger(do_inject, match) else do_inject()
 
 
 convention.mocha = (gpattern, xpat, host_or_factory)->
