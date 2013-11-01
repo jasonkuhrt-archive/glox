@@ -16,13 +16,25 @@ assert = require('assert-plus')
 #
 # @param gpat
 # @param xpat
-# @param options
-# @param callback
+# @param options ?({})
+# @param callback ?(->)
+#
+# @return void
+#
+# @signature
+#   glox(gpat, xpat)
+#   glox(gpat, xpat, callback)
+#   glox(gpat, xpat, options)
+#   glox(gpat, xpat, options, callback)
 #
 module.exports = glox = (gpat, xpat, options, callback)->
+  if arguments.length is 2 then       [options, callback] = [{}, ->]
+  else if _.isFunction(options) then  [options, callback] = [{}, options]
+
   assert.string gpat, 'gpat'
   assert.string xpat, 'xpat'
-  #TODO handle optional options
+  assert.object options, 'options'
+  assert.func callback, 'callback'
 
   glob gpat, options, (er, paths)->
     return callback(er) if er
@@ -31,11 +43,19 @@ module.exports = glox = (gpat, xpat, options, callback)->
 
 
 # Sync glox
-# See docs for glox
-glox.sync = (gpat, xpat, options)->
+#
+# @param gpat & xpat & options, see docs for glox()
+#
+# @return [match]
+#
+# @signature
+#   glox.sync(gpat, xpat)
+#   glox.sync(gpat, xpat, options)
+#
+glox.sync = (gpat, xpat, options={})->
   assert.string gpat, 'gpat'
   assert.string xpat, 'xpat'
-  #TODO handle optional options
+  assert.object options, 'options'
 
   find_matches(glob.sync(gpat, options), xpat)
 
@@ -44,8 +64,9 @@ glox.sync = (gpat, xpat, options)->
 # a given array of strings.
 # Returns an array of regexp matches.
 find_matches = (strings, xpat)->
-  assert.arrayOfString(strings)
-  assert.string(xpat)
+  assert.arrayOfString strings
+  assert.string xpat
+
   matcher = _.partialRight(xre.exec, xre(xpat))
   matches = _.compact(_.map(strings, (str)-> matcher(str)))
 
@@ -54,12 +75,20 @@ find_matches = (strings, xpat)->
 
 
 
+# Conventions
+# Meaning file-naming patterns that facilitate machine automation.
+#
+# Some are included with glox. They should be factored
+# out into their own project once several more have been added and justify
+# it. Logically they do not belong coupled with glox. It is just a matter
+# of time.
 
 
+glox.convention = convention = (gpat)->
+  assert.string gpat
 
-glox.convention  = convention = (gpat)->
-  do_trans = (acc, v, k)-> acc[k] = _.partial(v, gpat)
-  _.transform(glox.convention, do_trans, {})
+  do_transform = (acc, v, k)-> acc[k] = _.partial(v, gpat)
+  _.transform(glox.convention, do_transform, {})
 
 
 convention.inject = (gpat, xpat, host_or_factory, manual_trigger)->
