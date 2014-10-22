@@ -23,11 +23,11 @@
     "url": "https://github.com/jasonkuhrt/glox/issues"
   },
   "dependencies": {
-    "xregexp": "~2.0.0",
+    "assert-plus": "~0.1.4",
+    "coffee-script": "^1.8.0",
     "glob": "~3.2.6",
     "lodash": "~2.2.1",
-    "coffee-script": "~1.6.3",
-    "assert-plus": "~0.1.4"
+    "xregexp": "~2.0.0"
   },
   "devDependencies": {
     "tap": "~0.4.4",
